@@ -24,3 +24,18 @@ export const createBook = async (req: Request, res: Response) => {
     }
 };
 
+// GET a book by ID
+export const getBookById = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const book = await BookModel.findById(id);
+      
+      if (!book) {
+        return res.status(404).json({ message: 'Book not found' });
+      }
+      
+      res.status(200).json(book);
+    } catch (error) {
+      res.status(500).json({ message: 'Error retrieving book', error });
+    }
+  };
